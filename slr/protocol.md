@@ -20,14 +20,16 @@ This SLR is being conducted to address the review comments raised at the confirm
 
 ## 3. Search Strategy
 
-**Databases:** IEEE Xplore, ACM Digital Library, Scopus, Web of Science. Google Scholar for snowballing only.
+**Databases:** IEEE Xplore, ACM Digital Library, Scopus, SpringerLink, ScienceDirect. Google Scholar and DBLP for snowballing only.
 
 **Search terms**, combined per topic:
 
-- Python AND (interpreter OR GIL OR dynamic typing OR garbage collection)
-- Python AND (static analysis OR type checking OR formal verification OR model checking OR symbolic execution)
+- Python AND ("static analysis" OR "abstract interpretation" OR "type inference" OR "gradual typing" OR "type checking" OR "type error")
+- Python AND ("formal verification" OR "model checking" OR "bounded model checking" OR "symbolic execution" OR "deductive verification" OR "theorem proving" OR contract*)
+- ("restricted subset" OR "language subset" OR "safe subset" OR "coding standard" OR "coding guideline" OR profile) AND ("safety-critical" OR "high-integrity" OR certification)
 - (restricted subset OR MISRA OR SPARK) AND (safety-critical OR high-assurance)
-- DO-178C OR DO-333 OR DO-332 OR DO-330
+- ("DO-178" OR "DO-330" OR "DO-333" OR "ED-12" OR "airborne software" OR avionics) AND ("formal method*" OR "tool qualification" OR "static analysis" OR verification OR "programming language"
+- ("worst-case execution time" OR WCET OR "real-time" OR determinis*) AND ("garbage collection" OR "managed runtime" OR "virtual machine" OR interpreter OR Python OR Java)
 - safety-critical Java OR SCJ OR JSF AV
 - Mojo OR Cython OR Nuitka OR PyPy OR Numba OR MicroPython (performance-oriented or restricted Python implementations)
 
@@ -39,9 +41,9 @@ Each query family will be translated into the exact syntax required by each data
 
 ## 4. Inclusion / Exclusion
 
-**Include:** peer-reviewed, 2010–2026, English, and directly relevant to Python runtime/verification, language-subsetting for safety, or DO-178C/DO-333/DO-330 objectives.
+**Include:** peer-reviewed, 1995–2026, English, and directly relevant to Python runtime/verification, language-subsetting for safety, or DO-178C/DO-333/DO-330 objectives. Work that analyses, verifies, restricts or benchmarks Python or a comparable dynamic language; formal-methods; and work presenting a restricted-subset strategy in a safety context.
 
-**Exclude:** marketing material with no methodology; performance-focused papers that have no bearing on safety, verification, or subset/toolchain feasibility; duplicate/superseded versions (keep the newer one); standards unrelated to the DO-178C family.
+**Exclude:** marketing material with no methodology; performance-focused papers that have no bearing on safety, verification, or subset/toolchain feasibility; duplicate/superseded versions (keep the newer one);
 
 ## 5. Screening
 
