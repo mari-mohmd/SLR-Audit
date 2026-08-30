@@ -1,1 +1,12 @@
-study_id,bibliographic_information,rqs_addressed,rq_relevance,language_tool,verification_restriction_approach,subset_restrictions_and_rationale,excluded_dynamic_features,property_classes_and_guarantees,translation_and_semantic_preservation,trusted_computing_base,developer_burden,evaluation_corpus_and_scale,scalability,do178c_relevance,author_stated_limitations,evidence_pages,notes
+# Notes:
+# study_id: Links back to `screening.csv`
+# verification_approach_category: grouping key (type_based / model_checking / symbolic_execution / language_subsetting / hybrid)
+# rq1_relevance, rq2_relevance, rq3_relevance: Brief description of how the study informs research questions
+# property_classes_and_guarantees: what's actually being verified/guaranteed, likely differs meaningfully by approach
+# trusted_computing_base: Software, hardware, tools, assumptions, libraries, compilers, runtimes, or other components that must be trusted for the reported results or guarantees.
+# developer_burden: Developer effort required, including annotations, specifications, contracts, type information, restrictions, or other additional work.
+# evaluation_corpus_and_scale: Programs, benchmarks, datasets, case studies, or projects used for evaluation and their reported size or scale.
+# author_stated_limitations: Limitations, threats to validity, assumptions, or unresolved issues explicitly identified by the authors.
+# evidence_pages: Page, section, figure, or table references supporting the extracted information.
+
+study_id,verification_approach_category,rq1_relevance,rq2_relevance,rq3_relevance,property_classes_and_guarantees,trusted_computing_base,developer_burden,evaluation_corpus_and_scale,author_stated_limitations,evidence_pages
