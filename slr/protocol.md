@@ -46,13 +46,9 @@ Each query family will be translated into the exact syntax required by each data
 A study will be included if it satisfies the following criteria:
 
 * I1 — Publication type: The work is a peer-reviewed research paper, including journal articles, conference papers, or workshop papers. Standards, regulatory guidance, and Python Enhancement Proposals (PEPs) will be retained in a separate reference pool and are not required to be peer-reviewed.
-
 * I2 — Publication period and language: The work was published between 1995 and 2026 and is available in English.
-
 * I3 — Technical relevance: The work directly addresses Python runtime behaviour, verification, static or dynamic analysis, language subsetting, or a comparable dynamic programming language.
-
 * I4 — Safety and verification relevance: The work addresses safety-critical software, formal methods, verification, restriction of language features, or the feasibility of a safety-oriented toolchain.
-
 * I5 — DO-178C and related relevance: The work directly addresses, evaluates, or provides evidence relevant to DO-178C, DO-330, DO-333, or objectives and practices applicable to airborne safety-critical software. Relevant DO-178C, DO-330, DO-333, and PEP documents will be retained in the separate reference pool to support the interpretation of the included studies.
 
 **Exclusion criteria**
@@ -60,18 +56,12 @@ A study will be included if it satisfies the following criteria:
 A candidate will be excluded if any of the following criteria apply:
 
 * E1 — Publication type: The work is marketing material, an opinion piece, presentation, blog post, or other non-research material without a substantive methodology.
-
 * E2 — Language or date: The work is not available in English or was published outside the 1995--2026 period.
-
 * E3 — Insufficient technical relevance: The work does not address Python, a comparable dynamic language, verification, language restriction, or a relevant formal-methods approach.
-
 * E4 — Insufficient safety/verification relevance: The work is focused solely on general-purpose performance, programming productivity, or language features without relevance to safety, verification, restriction, or toolchain feasibility.
-
 * E5 — Duplicate or superseded work: The work is a duplicate or superseded version of another included study. Where multiple versions exist, the most complete or recent version will be retained.
 
 ## 5. Screening
-
-Titles and abstracts will be screened first to filter out clearly irrelevant papers. For papers that pass this stage, the methods, results/evaluation, and conclusion sections will be reviewed to make the include/exclude decision - full papers will not be read in full at this stage, given the 1.5-month timeframe for this review. Papers with an unclear or ambiguous fit based on these sections will be read in full before a final decision is made. Every decision (include/exclude, with reason) will be logged in `slr/screening.csv`. Where possible, a supervisor or second reviewer will independently check a sample of ~20% of decisions, with any disagreements resolved by discussion.
 
 Titles and abstracts will be screened first to exclude clearly irrelevant papers. The included studies will then be assessed using a two-tier reading strategy.  **Core comparator studies** , including key approaches such as Nagini, ESBMC-Python, Monat, Fromherz, RPython, CrossHair, PyVeritas, and the CompCert qualification work, will be read in full because the detailed extraction fields required for this review cannot reliably be recovered from abstracts or selected sections alone. For all other studies, the methods, results/evaluation, and conclusion sections will be reviewed to make the include/exclude decision. Papers with an unclear or ambiguous fit will be read in full before a final decision is made.
 
@@ -82,7 +72,7 @@ Given the 1.5-month timeframe, this targeted-reading approach is an explicit lim
 For each included paper, data will be extracted using a predefined extraction schema and recorded in `slr/extraction.csv`, with one row per included study. The schema will capture the following information:
 
 * Bibliographic information: authors, title, publication year, venue, and DOI or other persistent identifier where available.
-* RQ mapping: the research question(s) (RQ1--RQ4) informed by the study and the evidence relevant to each RQ.
+* RQ mapping: the research question(s) (RQ1--RQ3) informed by the study and the evidence relevant to each RQ.
 * Language and tool: the programming language, tool, framework, analysis technique, or verification technology studied.
 * Verification or restriction approach: the approach used to verify, analyse, restrict, or otherwise establish properties of the language or programs.
 * Subset restrictions: any language subset, coding restrictions, or programming constructs that the approach requires or imposes, together with the stated rationale for each restriction.
