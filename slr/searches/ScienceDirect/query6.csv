@@ -1,0 +1,55 @@
+year,title,venue,topic
+1999,Applying formal proof techniques to avionics software: A pragmatic approach,Lecture Notes in Computer Science,formal verification / avionics
+2001,Formal analysis of a space-craft controller using SPIN,ARTICLE,model checking / spacecraft
+2008,Gradual typing with unification-based inference,DLS'08: Proceedings of the 2008 Symposium on Dynamic Languages,gradual typing / type inference
+2009,Towards gradual typing for generics,Proceedings for the 1st Workshop on Script to Program Evolution,gradual typing
+2009,Principal type schemes for gradual programs,Conference Record of the Annual ACM Symposium on Principles of Programming Languages,gradual typing / type inference
+2010,Integrating model checking with safety-critical I&C software design,7th International Topical Meeting on Nuclear Plant Instrumentation, Control, and Human-Machine Interface Technologies 2010,model checking / safety-critical systems
+2011,Preemptive type checking in dynamically typed languages,Lecture Notes in Computer Science,type checking / Python-like dynamic languages
+2013,Static type analysis for python,Proceedings - 11th Web Information System and Application Conference, WISA 2014,Python static analysis / type inference
+2013,On the cost of type-tag soundness,PEPM 2018 - Proceedings of the ACM SIGPLAN Workshop on Partial Evaluation and Program Manipulation,gradual typing / performance
+2013,Verification conditions for source-level imperative programs,ARTICLE,deductive verification / model checking
+2013,Testing or formal verification: DO-178C alternatives and industrial experience,IEEE Software,formal verification / DO-178C
+2014,How do programmers use optional typing? An empirical study,MODULARITY 2014,optional typing
+2014,A case study of specification and verification using JML in an avionics application,ACM International Conference Proceeding Series,deductive verification / avionics
+2014,Formal verification of avionics software products,ARTICLE,formal verification / avionics
+2015,Static value analysis of python programs by abstract interpretation,Lecture Notes in Computer Science,Python abstract interpretation
+2015,How Good Are Your Types? Using Mutation Analysis to Evaluate the Effectiveness of Type Annotations,ICSTW 2017,type annotations / evaluation
+2015,Principal type schemes for gradual programs,Conference Record of the Annual ACM Symposium on Principles of Programming Languages,gradual typing
+2016,Formal verification of avionics self adaptive software: A case study,ACM International Conference Proceeding Series,formal verification / avionics
+2017,An approach to formal verification of python software transactional memory,ACM International Conference Proceeding Series,Python formal verification
+2017,Big types in little runtime: Open-world soundness and collaborative blame for gradual type systems,Conference Record of the Annual ACM Symposium on Principles of Programming Languages,gradual typing
+2017,How Good Are Your Types? Using Mutation Analysis to Evaluate the Effectiveness of Type Annotations,ICSTW 2017,type annotations
+2018,Static value analysis of python programs by abstract interpretation,Lecture Notes in Computer Science,Python static analysis / abstract interpretation
+2018,DLInfer: Deep Learning with Static Slicing for Python Type Inference,Proceedings - International Conference on Software Engineering,Python type inference
+2018,Model-based verification and testing methodology for safety-critical airborne systems,Communications in Computer and Information Science,airborne verification
+2019,Sim: A Contract-Based Programming Language for Safety-Critical Software,AIAA/IEEE Digital Avionics Systems Conference - Proceedings,contracts / safety-critical software
+2019,Towards rust for critical systems,ISSREW 2019,safety-critical programming languages
+2020,An empirical study on dynamic typing related practices in python systems,IEEE International Conference on Program Comprehension,Python dynamic typing practices
+2020,Optimizing and evaluating transient gradual typing,DLS 2019 - Proceedings of the 15th ACM SIGPLAN International Symposium on Dynamic Languages,gradual typing / performance
+2020,Model checking python programs with MSVL,Lecture Notes in Computer Science,Python model checking
+2020,Taming type annotations in gradual typing,Proceedings of the ACM on Programming Languages,gradual typing
+2021,Static Type Inference for Foreign Functions of Python,Proceedings - International Symposium on Software Reliability Engineering, ISSRE,Python type inference
+2021,Verification support for ARINC-653-based avionics software,Software Testing Verification and Reliability,avionics verification
+2021,Towards a continuous certification of safety-critical avionics software,Computers in Industry,certification / avionics
+2021,DO-330/ED-215 overlay to the IEEE recommended practice for Distributed Simulation Engineering and Execution Process,Journal of Aerospace Information Systems,tool qualification
+2022,The evolution of type annotations in python: an empirical study,ESEC/FSE 2022,Python type annotations
+2023,Generative Type Inference for Python,Proceedings - 2023 38th IEEE/ACM International Conference on Automated Software Engineering, ASE 2023,Python type inference
+2023,Concerns with using Python in Machine Learning Flight Critical Applications,FORUM 2023 - Vertical Flight Society 79th Annual Forum and Technology Display,Python / flight-critical applications
+2023,Formal Verification of Autonomous Vehicles: Bridging the Gap between Model-Based Design and Model Checking,SAE International Journal of Advances and Current Practices in Mobility,model checking / safety-critical systems
+2024,PyTy: Repairing Static Type Errors in Python,Proceedings - International Conference on Software Engineering,Python type-error repair
+2024,Static Blame for gradual typing,Journal of Functional Programming,gradual typing
+2024,Typify: A Lightweight Usage-driven Static Analyzer for Precise Python Type Inference,Proceedings - 2026 IEEE/ACM 34th International Conference on Program Comprehension, ICPC 2026,Python type inference
+2024,Towards Effective Static Type-Error Detection for Python,Proceedings - 2024 39th ACM/IEEE International Conference on Automated Software Engineering, ASE 2024,Python type-error detection
+2024,Generating Python Type Annotations from Type Inference: How Far Are We?,ACM Transactions on Software Engineering and Methodology,Python type annotations
+2024,ESBMC-Python: A Bounded Model Checker for Python Programs,ISSTA 2024 - Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis,Python bounded model checking
+2024,Pyinder: Towards Effective Static Type-Error Detection for Python,Proceedings - 2024 39th ACM/IEEE International Conference on Automated Software Engineering, ASE 2024,Python static analysis
+2024,A Comprehensive Overview of Formal Methods and Deep Learning for Verification and Optimization,2024 International Conference on Decision Aid Sciences and Applications, DASA 2024,formal methods
+2025,PoTo: A Hybrid Andersen’s Points-To Analysis for Python,LIPIcs,Python static analysis / points-to analysis
+2025,Scrum4DO178C: An Agile Process to Enhance Aerospace Software Development for DO-178C Compliance—A Case Study at Criticality Level A,IEEE Access,DO-178C compliance
+2025,A Proposal for an Adapted Scrum for Aeronautical Software Development,AIAA/IEEE Digital Avionics Systems Conference - Proceedings,DO-178C / aerospace process
+2025,Weaving Agility in Safety-Critical Software Development for Aerospace: From Concerns to Opportunities,IEEE Access,agile / safety-critical aerospace
+2026,Assessing Python’s suitability for airborne safety-critical systems under DO-178C guidelines,Journal of Computer Languages,Python / airborne safety-critical systems
+2026,How do third-party Python libraries use type annotations?,Proceedings - 2026 IEEE/ACM 23rd International Conference on Mining Software Repositories, MSR 2026,Python type annotations
+2026,Formal verification for I²C communication Protocol in aerospace and aviation industries,article,formal verification / aerospace
+2026,Finding software vulnerabilities in large C projects via bounded model checking,International Journal on Software Tools for Technology Transfer,bounded model checking
