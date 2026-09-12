@@ -39,7 +39,10 @@ This SLR is being conducted to address the review comments raised at the confirm
 
 Each query family will be translated into the exact syntax required by each database and executed accordingly. Search results will be logged in `slr/searches/`. Each database will have its own folder containing the export of each search query. Any deviations from the search queries or conditions defined above will be documented in `prisma_counts.csv`, in the `note` column. The internal structure and level of detail within each file are left to the author’s discretion.
 
-## 4. Inclusion / Exclusion
+## 4. Search Validation
+Before screening begins, the search strategy is validated against a known-item set: the Tier-1 references identified in supervisory guidance of 12 August 2026. A search strategy that fails to retrieve papers known to be in scope and indexed in the searched databases is revised before proceeding.
+
+## 5. Inclusion / Exclusion
 
 **Inclusion criteria**
 
@@ -61,14 +64,15 @@ A candidate will be excluded if any of the following criteria apply:
 * E4 - Insufficient safety/verification relevance: The work is focused solely on general-purpose performance, programming productivity, or language features without relevance to safety, verification, restriction, or toolchain feasibility.
 * E5 - Duplicate or superseded work: The work is a duplicate or superseded version of another included study. Where multiple versions exist, the most complete or recent version will be retained.
 * E6 - Books: including text books or book chapers. Such works are typically do not undergo the same peer-review process as journal articles or conference papers, and their content can vary substantially across editions, making the specific claims difficult to verify or trace to a fixed version.
+* E8 - List of`"exclude-keywords"`defined in the automated extraction tools.
 
-## 5. Screening
+## 6. Screening
 
 Titles and abstracts will be screened first to exclude clearly irrelevant papers. The included studies will then be assessed using a two-tier reading strategy.  **Core comparator studies** , including key approaches such as Nagini, ESBMC-Python, Monat, Fromherz, RPython, CrossHair, PyVeritas, and the CompCert qualification work, will be read in full because the detailed extraction fields required for this review cannot reliably be recovered from abstracts or selected sections alone. For all other studies, the methods, results/evaluation, and conclusion sections will be reviewed to make the include/exclude decision. Papers with an unclear or ambiguous fit will be read in full before a final decision is made.
 
 Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) will be recorded in `slr/screening.csv`.  A supervisor or second reviewer will independently check a sample of approximately 20% of screening decisions, with disagreements resolved through discussion.
 
-## 6. Data Extraction
+## 7. Data Extraction
 
 For each included paper, data will be extracted using a predefined extraction schema and recorded in `slr/extraction.csv`, with one row per included study. The schema will capture the following information:
 
@@ -90,6 +94,6 @@ For each included paper, data will be extracted using a predefined extraction sc
 
 Where a field is not reported or cannot be determined from the paper, it will be recorded as NR (not reported) rather than inferred.
 
-## 7. Synthesis
+## 8. Synthesis
 
 Papers will be grouped by verification approach (type-based, model checking, symbolic execution, language subsetting) and compared across groups against RQ1–RQ3.

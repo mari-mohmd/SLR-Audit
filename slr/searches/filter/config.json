@@ -1,0 +1,67 @@
+{
+  "input": {
+    "csv_files": ["searches.csv"],
+    "csv_dir": ".",
+    "title_column": "title",
+    "encoding": "utf-8"
+  },
+  "output": {
+    "included_csv": "included_papers.csv",
+    "excluded_csv": "excluded_papers.csv"
+  },
+  "filters": {
+    "keywords": ["Python AND Safety", "DO-178C", "DO-330", "DO-332", "DO-333", "Software AND Safety", 
+      "Certification AND Software", "Development AND Safety", "Programming AND Safety", "safety-critical AND (software OR systems OR applications)", 
+      "embedded systems AND (Safety OR Testing OR Validation OR quality)", "JAVA AND Safety", "Mojo AND (Safety OR Quality OR Performance)",
+      "\"software verification\"", "\"software validation\"", "\"software testing\" AND (Safety OR Assurance OR Certification)",
+      "Avionics AND (Safety OR Testing OR Validation OR quality OR Python OR Java OR Mojo)", 
+      "Aerospace AND Safety", "\"safety-critical software\"", "\"safety-critical systems\"",
+      "software AND (quality OR assurance)", "ADA AND (Safety OR Assurance OR Certification OR Safety-Critical)",
+      "SPARK","\"MISRA C\"", "\"MISRA C++\"", "\"MISRA guidelines\"", "\"MISRA", "\"Type Annotations\"",
+      "Type-Error", "Type-Errors", "Type-Checking", "Type-Checker", "Type-Checkers",
+      "Type-Safety", "Type-Safe", "Type-Safely","\"Gradual Typing\"", "\"Gradual Type System\"",
+      "\"Gradual Type Systems\"", "\"Gradual Type Checking\"", "Transpilation", "Transpiler", "Transpilers", "Transpiling", "Transpile",
+      "\"model checking\" AND (Python OR Java OR Mojo)" , "\"model checker\"AND (Python OR Java OR Mojo)"],
+    
+      "exclude-keywords": ["AI", "ML", "mining", "\"deep learning\"", "\"neural networks\"", "\"machine learning\"", 
+      "data science", "cyber", "secure", "Electric", "Power", "Energy", "Electrical", "Electronics", 
+      "Hardware", "FPGA", "FPGAs", "Cable", "VHDL", "Verilog", "security-critical",
+      "IoT", "\"Internet of Things\"", "Blockchain", "Cryptography", "Quantum", "Agile", "Recovery",
+      "Scrum", "DevOps", "Cloud", "Serverless", "Microservices", "Kubernetes", "Docker", "AWS",
+      "Azure", "GCP","Google", "\"Data Engineering\"", "\"Data Analytics\"", "\"Data Analysis\"", "Distributed", 
+      "Data Visualization", "\"Data Pipeline\"", "\"Data Processing\"", "\"Data Management\"", "\"Data Storage\"",
+      "\"Data Integration\"", "\"Data Transformation\"", "\"Data Cleaning\"", "\"Data Wrangling\"", "\"Data Mining\"",
+      "Malicious", "Malware", "Ransomware", "Phishing", "Hacking", "Cybersecurity", "\"Cyber Security\"",
+      "LLM", "\"Large Language Model\"","\"Large Language Models\"", "ChatGPT", "GPT-3", "GPT-4", "BERT", "Transformer", "NLP",
+      "\"Computer Vision\"", "\"Image Recognition\"", "\"Object Detection\"", "\"Facial Recognition\"",
+      "\"Security Vulnerabilities\"", "mechatronic", "UML", "SysML", "courses", "training", "education", "teaching", 
+      "Model-Based", "Model-Driven", "Model-Driven", "tutorials", "lectures", "lecturing", "seminars", "workshops", 
+      "MDA", "MDE", "MBD", "MDD", "MDSD", "MDSD", "\"Reverse Engineering\"", "Reverse-Engineering", "CAD",
+      "Reverse-Engineer", "Reverse-Engineered", "Reverse-Engineers", "Redundancy", "wireless", "management", "Facility", "Facilities"],
+
+    "include-papers": [
+      "Assessing Python's suitability for airborne safety-critical systems under DO-178C guidelines",
+      "Nagini: A Static Verifier for Python",
+      "ESBMC-Python: A Bounded Model Checker for Python Programs",
+      "Static Value Analysis of Python Programs by Abstract Interpretation",
+      "Static Type Analysis by Abstract Interpretation of Python Programs",
+      "A Multilanguage Static Analysis of Python Programs with Native C Extensions",
+      "RPython: a Step Towards Reconciling Dynamically and Statically Typed OO Languages",
+      "Gradual Soundness: Lessons from Static Python",
+      "Feasibility Study for a Python-Based Embedded Real-Time Control System",
+      "Computing the Worst Case Execution Time of an Avionics Program by Abstract Interpretation",
+      "Formal Verification of Avionics Software Products",
+      "Testing or Formal Verification: DO-178C Alternatives and Industrial Experience",
+      "State of the Art in Software Tool Qualification with DO-330",
+      "The MISRA C Coding Standard and its Role in the Development and Analysis of Safety- and Security-Critical Embedded Software",
+      "Development and Verification of a Flight Stack for a High-Altitude Glider in Ada/SPARK 2014",
+      "Formal Verification of a Realistic Compiler",
+      "Qualifying CompCert for Safety-Critical Avionics Software"
+    ],
+    "whole_word": true
+  },
+    "deduplicate": {
+    "enabled": true,
+    "keep": "first"
+  }
+}
