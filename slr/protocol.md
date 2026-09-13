@@ -2,7 +2,7 @@ Systematic Literature Review Protocol
 
 ## Python for DO-178C-Compliant Airborne Software: Restricted Subset and Verification Toolset
 
-**Version:** 1.1 | **Author:** Mohammad Mari | **Supervisors:** Dr. Lian Wen & Qinyi Li |  **Assessor:** Prof. Rene Hexel |  **Affiliation:** Griffith University | **Date:** 2026-08-26
+**Version:** 1.2 | **Author:** Mohammad Mari | **Supervisors:** Dr. Lian Wen & Qinyi Li |  **Assessor:** Prof. Rene Hexel |  **Affiliation:** Griffith University | **Date:** 2026-09-13
 
 ---
 
@@ -42,6 +42,10 @@ Each query family will be translated into the exact syntax required by each data
 ## 4. Search Validation
 Before screening begins, the search strategy is validated against a known-item set: the Tier-1 references identified in supervisory guidance of 12 August 2026. A search strategy that fails to retrieve papers known to be in scope and indexed in the searched databases is revised before proceeding.
 
+**Result.** Of the 17 Tier-1 references, 14 were present in the merged search results. All 14 are carried through to the screened set (see Section 6.1). The three absent references — Souyris et al. (2005), Leroy (2009) and Kästner et al. (2026) — were not returned by any database search and enter the review through citation searching, recorded as a separate identification route in the PRISMA flow.
+
+**Search coverage limitation.** Exports from IEEE Xplore were capped at 1,000 records per query, which affected the queries addressing airborne certification standards (Query5) and worst-case execution time (Query6); the retrieved set for those two queries is therefore a subset of the reported hits. SpringerLink applied a similar export cap and was retrieved in batches. Coverage of this review is accordingly not claimed to be exhaustive. It is claimed to be documented, reproducible, and validated against a known-item set, with 14 of the 14 known-relevant references present in the searched corpus appearing in the screened set.
+
 ## 5. Inclusion / Exclusion
 
 **Inclusion criteria**
@@ -68,9 +72,25 @@ A candidate will be excluded if any of the following criteria apply:
 
 ## 6. Screening
 
+### 6.1 Construction of the screening set
+
+The database searches returned a corpus too large to screen exhaustively. Records were deduplicated by DOI, and by normalised title where no DOI was present, reducing 50,731 raw records to 42,568 unique records. Because the exports carry abstracts for only about 14% of records — the Scopus export contains no abstract field — abstracts were additionally retrieved from OpenAlex by DOI, raising abstract coverage of the screening set to 84%.
+
+Each record was then scored against five topic facets drawn from the research questions: Python and its implementations; verification and static analysis; certification standards and safety-critical software; runtime, memory and timing behaviour; and restricted language subsets and comparator languages. The subject of this review is the intersection of these areas, so a record connecting two or more facets is treated as a candidate. A small set of terms specific enough to warrant inclusion alone (for example DO-178C, MISRA, WCET, CompCert, JSR-302) is treated as sufficient on its own, and explicit compound rules capture intersections that a distinct-facet count cannot see — "hard real-time garbage collection", for instance, matches the runtime facet twice rather than two facets. Off-topic signals demote a record by one band but never remove it, so that a relevant paper which merely mentions an excluded topic is retained.
+
+Records are assigned to bands: band 1 (strong term, compound match, or two or more title facets), band 2 (one title facet corroborated by the abstract, or Python in the title with corroboration), band 3 (Python in the title without corroboration), band 4 (a single facet, no corroboration) and band 5 (no topical facet). Bands 1 and 2 form the screening set of 2,870 records; band 3 (654 records) is screened as time permits; band 4 (9,410 records) is retained and sampled to estimate what the rule misses; band 5 (29,634 records) is excluded.
+
+This rule contains no hard-coded list of known papers, so validation against the Tier-1 set is a measurement rather than a restatement. All 14 Tier-1 references present in the corpus fall in band 1. A further nine references held out from the design of the rule fall in bands 1 to 3, seven of them within the screening set and two in the optional band. Key-topic recall in the screened set is 107/107 for worst-case execution time, 53/53 for the DO-178 family, 12/12 for MISRA and 40/42 for MC/DC and structural coverage.
+
+An earlier keyword-whitelist filter (retained, superseded, under `slr/searches/filter/`) was replaced because a whitelist discards any topic not named in advance: it retained 1 of 107 worst-case execution time records and none of the 60 concerning memory management. Its Tier-1 check did not detect this, because the Tier-1 titles were themselves hard-coded into a must-keep list and so bypassed the filter.
+
+The screening set, the held and excluded sets, and the method note are under `slr/screening/`. `slr/tools/build_screening_set.py` reproduces all four files from `slr/searches/filter/searches.csv` in a single pass using only the standard library.
+
+### 6.2 Screening procedure
+
 Titles and abstracts will be screened first to exclude clearly irrelevant papers. The included studies will then be assessed using a two-tier reading strategy.  **Core comparator studies** , including key approaches such as Nagini, ESBMC-Python, Monat, Fromherz, RPython, CrossHair, PyVeritas, and the CompCert qualification work, will be read in full because the detailed extraction fields required for this review cannot reliably be recovered from abstracts or selected sections alone. For all other studies, the methods, results/evaluation, and conclusion sections will be reviewed to make the include/exclude decision. Papers with an unclear or ambiguous fit will be read in full before a final decision is made.
 
-Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) will be recorded in `slr/screening.csv`.  A supervisor or second reviewer will independently check a sample of approximately 20% of screening decisions, with disagreements resolved through discussion.
+Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) is recorded in the `decision`, `criterion` and `notes` columns of `slr/screening/SCREEN_bands1-2.csv`, which serves as the screening log.  A supervisor or second reviewer will independently check a sample of approximately 20% of screening decisions, with disagreements resolved through discussion.
 
 ## 7. Data Extraction
 
