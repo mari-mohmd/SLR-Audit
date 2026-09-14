@@ -1,7 +1,9 @@
 # Screening-set construction — method note
 
 Prepared 13 September 2026. Input: `slr/searches/filter/searches.csv` from the SLR-Audit
-repository (the merged export of all five database searches), 50,731 records.
+repository (the merged export of all five database searches), ~~50,731  records.~~
+
+_14 September re-executed queries 5&6 in ieeeXplorer. `searches.csv` now contains 58,579 records_
 
 ## Why this replaces the keyword filter
 
@@ -76,6 +78,15 @@ them: 829 recovered from 1,106 attempted. Abstract coverage across the screening
 | `HELD_band4.csv`            | 9,410   | Single facet, no corroboration. Sample ~200 to estimate what the rule misses.                                                                                                           |
 | `EXCLUDED_band5.csv`        | 29,634  | No topical facet in any available field.                                                                                                                                                |
 
+_As of 14 September:_
+
+| File                          | Records | What it is                                                                                                                                                                              |
+| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SCREEN_bands1-2.csv`       | 3,709   | **Screen these.** Band 1 first (strong term, compound match, or two-plus title facets), then band 2 (one title facet corroborated by the abstract, or Python plus corroboration). |
+| `SCREEN_band3_optional.csv` | 775     | Python in the title without corroboration. Screen if time allows — see the recall trade-off below.                                                                                     |
+| `HELD_band4.csv`            | 14,562  | Single facet, no corroboration. Sample ~200 to estimate what the rule misses.                                                                                                           |
+| `EXCLUDED_band5.csv`        | 30,589  | No topical facet in any available field.                                                                                                                                                |
+
 Each screening file carries empty `decision`, `criterion` and `notes` columns for the screening
 record, and the abstract inline so nothing needs to be looked up separately.
 
@@ -122,7 +133,7 @@ Title and abstract screening removes the remaining noise, and those decisions be
   through a separate PRISMA "identified via other methods" arm, recorded as citation searching
   — not inserted into the corpus without provenance.
 - `prisma_counts.csv` currently records export sizes rather than the hit counts the database
-  interfaces reported; Queries 5 and 6 were truncated at a 1,000-record export cap.
+  interfaces reported; query6-9 was truncated at a 1,000-record export cap.
 - Abstracts are missing for 86% of records. Re-exporting Scopus with abstracts would make
   abstract screening possible without retrieving each paper individually.
 
