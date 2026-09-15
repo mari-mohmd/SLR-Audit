@@ -1,16 +1,20 @@
 # Screening-set construction — method note
 
-Prepared 13 September 2026. Input: `slr/searches/filter/searches.csv` from the SLR-Audit
-repository (the merged export of all five database searches), ~~50,731  records.~~
+Prepared 13 September 2026; revised 15 September 2026. Input:
+`slr/searches/filter/searches.csv` from the SLR-Audit repository — the merged export of all five
+database searches, **58,496 records**.
 
-_14 September re-executed queries 5&6 in ieeeXplorer. `searches.csv` now contains 58,579 records_
+IEEE Queries 5 and 6 were re-exported in batches on 14 September to recover records lost to the
+1,000-record export cap (Query 6 rose from 1,000 to 8,251 records, Query 5 from 1,000 to 1,513).
+All figures in this note reflect the corpus after that re-export. The comparison against the
+superseded keyword filter in the next section is the exception, and is marked accordingly.
 
 ## Why this replaces the keyword filter
 
 The `apply_filter.py` whitelist kept a record only if its **title** matched one of ~46
 include keywords, and dropped it if the title matched any of ~110 exclude keywords. A
 whitelist silently discards anything nobody thought to name in advance. Measured against the
-merged corpus, it removed:
+13 September corpus of 50,731 records — the one the filter was actually run on — it removed:
 
 | Topic (title match)              | In corpus | Kept by whitelist |
 | -------------------------------- | --------- | ----------------- |
@@ -28,11 +32,11 @@ construction and tell you nothing about how it treats everything else.
 ## Method used here
 
 1. **Deduplication.** By DOI where present, else by normalised title (case, punctuation and
-   diacritics stripped). 50,731 → 42,568 unique records. Where duplicates differed, the record
+   diacritics stripped). 58,496 → 49,635 unique records. Where duplicates differed, the record
    carrying the most metadata was retained.
 2. **Facet scoring.** Each record's title — plus abstract and keywords where the export
-   provides them (14% of records; the Scopus export carries no abstracts) — is matched against
-   five topic facets:
+   provides them (30% of records after retrieval; the Scopus export carries no abstracts) — is
+   matched against five topic facets:
 
    - **PY** — Python, its implementations (CPython, PyPy, RPython, Cython, Numba, MicroPython,
      Mojo, mypy, Cinder), and dynamic/gradual typing
@@ -64,39 +68,31 @@ construction and tell you nothing about how it treats everything else.
 
 ## Abstract retrieval
 
-The exports carried abstracts for only 14% of records — the Scopus export (64% of the corpus)
-has no abstract field at all. Abstracts were retrieved from OpenAlex by DOI for records lacking
-them: 829 recovered from 1,106 attempted. Abstract coverage across the screening set is now
-**84%**, so most records can be screened on title *and* abstract rather than title alone.
+The exports carried abstracts for only about 14% of records — the Scopus export has no abstract
+field at all. Abstracts were retrieved from OpenAlex by DOI for records lacking them, giving a
+cache of 839. Abstract coverage is **87% across the screening set** (3,221 of 3,709) and 30%
+across the full deduplicated corpus, so most records can be screened on title *and* abstract
+rather than title alone.
 
 ## Output
 
-| File                          | Records | What it is                                                                                                                                                                              |
-| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SCREEN_bands1-2.csv`       | 2,870   | **Screen these.** Band 1 first (strong term, compound match, or two-plus title facets), then band 2 (one title facet corroborated by the abstract, or Python plus corroboration). |
-| `SCREEN_band3_optional.csv` | 654     | Python in the title without corroboration. Screen if time allows — see the recall trade-off below.                                                                                     |
-| `HELD_band4.csv`            | 9,410   | Single facet, no corroboration. Sample ~200 to estimate what the rule misses.                                                                                                           |
-| `EXCLUDED_band5.csv`        | 29,634  | No topical facet in any available field.                                                                                                                                                |
-
-_As of 14 September:_
-
-| File                          | Records | What it is                                                                                                                                                                              |
-| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SCREEN_bands1-2.csv`       | 3,709   | **Screen these.** Band 1 first (strong term, compound match, or two-plus title facets), then band 2 (one title facet corroborated by the abstract, or Python plus corroboration). |
-| `SCREEN_band3_optional.csv` | 775     | Python in the title without corroboration. Screen if time allows — see the recall trade-off below.                                                                                     |
-| `HELD_band4.csv`            | 14,562  | Single facet, no corroboration. Sample ~200 to estimate what the rule misses.                                                                                                           |
-| `EXCLUDED_band5.csv`        | 30,589  | No topical facet in any available field.                                                                                                                                                |
+| File | Records | What it is |
+|---|---|---|
+| `SCREEN_bands1-2.csv` | 3,709 | **Screen these.** Band 1 (1,769) first — strong term, compound match, or two-plus title facets. Then band 2 (1,940) — one title facet corroborated by the abstract, or Python plus corroboration. |
+| `SCREEN_band3_optional.csv` | 775 | Python in the title without corroboration. Screen if time allows — see the recall trade-off below. |
+| `HELD_band4.csv` | 14,562 | Single facet, no corroboration. Sample ~200 to estimate what the rule misses. |
+| `EXCLUDED_band5.csv` | 30,589 | No topical facet in any available field. |
 
 Each screening file carries empty `decision`, `criterion` and `notes` columns for the screening
 record, and the abstract inline so nothing needs to be looked up separately.
 
 ## Where to stop — measured
 
-| Screened    | Records | Tier-1 recall | Held-out recall |
-| ----------- | ------- | ------------- | --------------- |
-| Band 1 only | 1,656   | 14/14         | 4/9             |
-| Bands 1–2  | 2,870   | 14/14         | 7/9             |
-| Bands 1–3  | 3,524   | 14/14         | 9/9             |
+| Screened | Records | Tier-1 recall | Held-out recall |
+|---|---|---|---|
+| Band 1 only | 1,769 | 14/14 | 4/9 |
+| Bands 1–2 | 3,709 | 14/14 | 7/9 |
+| Bands 1–3 | 4,484 | 14/14 | 9/9 |
 
 Band 1 alone is not safe: it loses Vitousek, Behnel, Di Grazia, Stoico and Monat's SOAP paper.
 Bands 1–2 loses only Vitousek (gradual typing) and Behnel (Cython), both of which are heavily
@@ -104,28 +100,10 @@ cited by the Tier-1 set and would be recovered by the backward snowballing the p
 requires. **Bands 1–2 plus snowballing is the recommended stopping point**; bands 1–3 if time
 allows.
 
-Key-topic recall at the bands 1–2 cut: WCET 107/107, DO-178 family 53/53, MC/DC 40/42,
-safety-critical Java 80/91, garbage collection 101/186 (the remainder being database and
-distributed GC with no timing or managed-runtime angle).
-
-Every row carries `tier`, `score`, `facets`, `facets_extra` and a `why` column listing the
-matched terms, so each decision is explainable and re-runnable. `build_screening_set.py` reproduces the
-whole process from `searches.csv` in one pass, using only the standard library.
-
-## Validation
-
-- **Tier-1 recall: 14/14.** All fourteen Tier-1 references present in the corpus land in Tier A.
-  None are hard-coded — the scorer has no knowledge of the list, so this is a real test rather
-  than a restatement of a must-keep rule. (M10, M16 and M17 are absent from the corpus itself
-  and must be added through a documented citation-searching arm.)
-- **Held-out recall: 9/9.** Nine Tier-2/Tier-3 references never named to the scorer — Politz,
-  Vitousek, Di Grazia, Stoico, Behnel, Bolz, Oh & Oh, Monat (SOAP), Sun — all land in Tier A or B.
-- **Topic recovery** against the whitelist is in the table above: WCET 107/107, tool
-  qualification 9/9, DO-178 family 53/53, MISRA 12/12.
-
-Tier A precision is deliberately imperfect — this is a screening set, not an inclusion list.
-Title and abstract screening removes the remaining noise, and those decisions belong in
-`screening.csv` with a criterion code per record.
+Key-topic recall at the bands 1–2 cut: worst-case execution time 108/108, DO-178 family 55/55,
+MISRA 12/12, tool qualification 10/10, MC/DC and structural coverage 41/43, safety-critical Java
+89/97, garbage collection 108/214 and memory management 42/66 (the remainder in those last two
+being database, distributed and allocator work with no timing or managed-runtime angle).
 
 ## What still needs doing
 
@@ -133,9 +111,13 @@ Title and abstract screening removes the remaining noise, and those decisions be
   through a separate PRISMA "identified via other methods" arm, recorded as citation searching
   — not inserted into the corpus without provenance.
 - `prisma_counts.csv` currently records export sizes rather than the hit counts the database
-  interfaces reported; query6-9 was truncated at a 1,000-record export cap.
-- Abstracts are missing for 86% of records. Re-exporting Scopus with abstracts would make
-  abstract screening possible without retrieving each paper individually.
+  interfaces reported, and has not been updated for the 14 September re-export.
+- Two IEEE batches, `query6-8.csv` and `query6-9.csv`, each contain exactly 1,000 records and so
+  appear to remain at the export cap. This is recorded as a limitation; no further re-export is
+  planned, since the 14 September re-export added 7,765 records to the corpus but only about two
+  further records per key topic (worst-case execution time 107 → 108, DO-178 family 53 → 55).
+- Abstracts are absent for 70% of the full corpus, though only 13% of the screening set.
+  Re-exporting Scopus with abstracts would close most of the remainder.
 
 ## Reproducing this
 
