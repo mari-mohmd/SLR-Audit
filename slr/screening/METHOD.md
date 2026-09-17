@@ -14,7 +14,7 @@ superseded keyword filter in the next section is the exception, and is marked ac
 The `apply_filter.py` whitelist kept a record only if its **title** matched one of ~46
 include keywords, and dropped it if the title matched any of ~110 exclude keywords. A
 whitelist silently discards anything nobody thought to name in advance. Measured against the
-13 September corpus of 50,731 records — the one the filter was actually run on — it removed:
+13 September corpus of 58,496 records — the one the filter was actually run on — it removed:
 
 | Topic (title match)              | In corpus | Kept by whitelist |
 | -------------------------------- | --------- | ----------------- |
@@ -76,23 +76,23 @@ rather than title alone.
 
 ## Output
 
-| File | Records | What it is |
-|---|---|---|
-| `SCREEN_bands1-2.csv` | 3,709 | **Screen these.** Band 1 (1,769) first — strong term, compound match, or two-plus title facets. Then band 2 (1,940) — one title facet corroborated by the abstract, or Python plus corroboration. |
-| `SCREEN_band3_optional.csv` | 775 | Python in the title without corroboration. Screen if time allows — see the recall trade-off below. |
-| `HELD_band4.csv` | 14,562 | Single facet, no corroboration. Sample ~200 to estimate what the rule misses. |
-| `EXCLUDED_band5.csv` | 30,589 | No topical facet in any available field. |
+| File                          | Records | What it is                                                                                                                                                                                                |
+| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SCREEN_bands1-2.csv`       | 3,709   | **Screen these.** Band 1 (1,769) first — strong term, compound match, or two-plus title facets. Then band 2 (1,940) — one title facet corroborated by the abstract, or Python plus corroboration. |
+| `SCREEN_band3_optional.csv` | 775     | Python in the title without corroboration. Screen if time allows — see the recall trade-off below.                                                                                                       |
+| `HELD_band4.csv`            | 14,562  | Single facet, no corroboration. Sample ~200 to estimate what the rule misses.                                                                                                                             |
+| `EXCLUDED_band5.csv`        | 30,589  | No topical facet in any available field.                                                                                                                                                                  |
 
 Each screening file carries empty `decision`, `criterion` and `notes` columns for the screening
 record, and the abstract inline so nothing needs to be looked up separately.
 
 ## Where to stop — measured
 
-| Screened | Records | Tier-1 recall | Held-out recall |
-|---|---|---|---|
-| Band 1 only | 1,769 | 14/14 | 4/9 |
-| Bands 1–2 | 3,709 | 14/14 | 7/9 |
-| Bands 1–3 | 4,484 | 14/14 | 9/9 |
+| Screened    | Records | Tier-1 recall | Held-out recall |
+| ----------- | ------- | ------------- | --------------- |
+| Band 1 only | 1,769   | 14/14         | 4/9             |
+| Bands 1–2  | 3,709   | 14/14         | 7/9             |
+| Bands 1–3  | 4,484   | 14/14         | 9/9             |
 
 Band 1 alone is not safe: it loses Vitousek, Behnel, Di Grazia, Stoico and Monat's SOAP paper.
 Bands 1–2 loses only Vitousek (gradual typing) and Behnel (Cython), both of which are heavily
