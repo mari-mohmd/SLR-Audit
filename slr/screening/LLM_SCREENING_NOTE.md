@@ -115,8 +115,8 @@ demoted certification *process* studies, which protocol §5 excludes.
    upstream of work in progress. To close it:
    `select_second_pass.py --exclude-done SECOND_PASS_candidates.csv`, then screen the result with
    `screening_prompt_pass2.md` and rescore the promoted records with `screening_prompt_rescore.md`.
-   Backward snowballing from the included set, which the protocol requires in any case, recovers
-   work of this kind independently.
+   These records were retrieved and then excluded, so nothing else in the method compensates for
+   them: they are a screening gap, not a search gap.
 4. **Residual instability at the include/exclude boundary.** "A Modular Worst-case Execution Time
    Analysis Tool for Java Processors" was excluded while two near-identical Java-processor WCET
    papers were included. Records in this band should be treated as provisional.
