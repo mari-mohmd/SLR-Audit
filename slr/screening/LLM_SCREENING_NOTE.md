@@ -4,6 +4,30 @@ This note documents the automated title/abstract screening of the 3,709-record s
 records the limitations as well as the results, because several of them bear directly on how the
 output files may be used.
 
+## Which file do I use?
+
+**`INCLUDED_final.csv` — the 851 included records, highest relevance first.** This is the result.
+Everything else in this directory is either an input to producing it or a record of how it was
+produced.
+
+| I want to… | file |
+|---|---|
+| read or cite the included set | **`INCLUDED_final.csv`** (851 records) |
+| pick the core papers to extract from | the 152 records scored 5 in that file |
+| draw on the precedent literature | the 567 records scored 4 |
+| see why a particular record was excluded | `LLM_SCREEN_full_gpt-6-luna.csv` (all 3,709, with reasons) |
+| check how the screening was validated | this note, below |
+
+The relevance column in `INCLUDED_final.csv` comes from pass 3 and is the only one that is
+comparable across the whole included set. **Do not sort or filter the included set using the
+relevance columns in the pass 1 or pass 2 files** — those are on different scales (see Limitations,
+item 1), and mixing them silently corrupts the ordering.
+
+Two filenames are easy to confuse: `RESCORE_includes.csv` is the *input list* of 945 records fed to
+pass 3, not a result, and `LLM_RESCORE_includes_gpt-6-luna.csv` is pass 3's *output*, which contains
+those same 945 records — the 851 it included and the 94 it dropped. `INCLUDED_final.csv` is that
+output filtered to the includes, which is what almost every use needs.
+
 ## Why an automated pass
 
 The screening set is too large to read exhaustively within the candidature timeframe, and the
@@ -88,13 +112,31 @@ demoted certification *process* studies, which protocol §5 excludes.
 
 ## Files
 
-Outputs: `LLM_SCREEN_full_gpt-6-luna.csv` (pass 1, all 3,709),
-`LLM_SCREEN_pass2_gpt-6-luna.csv` (pass 2), `LLM_RESCORE_includes_gpt-6-luna.csv` (pass 3 — the
-file to use for ordering). Intermediate selections: `SECOND_PASS_candidates.csv`,
-`RESCORE_includes.csv`. Pilots `llm_pilot2..5b_gpt-6-luna.csv` are retained as the record of the
-prompt revisions and the repeat-agreement measurement; pilot 5b is the repeat of pilot 5.
+**Result**
 
-Tools: `../tools/screen_llm.py` (screening, stdlib only), `../tools/select_second_pass.py`
-(borderline selection), `../tools/fetch_abstracts2.py` (abstract recovery; 863 cached, further
-retrieval has reached diminishing returns at 7 recovered from 177 attempts across four sources).
-The API key is read from `~/.openai_key` and is never logged, written or committed.
+- `INCLUDED_final.csv` — the 851 included records, sorted by relevance then title. Generated from
+  pass 3's output by keeping the includes; regenerate with `../tools/make_included_final.py`.
+
+**Pass outputs** (one row per record screened, each with the criterion, relevance, evidence quotation
+and reason)
+
+- `LLM_SCREEN_full_gpt-6-luna.csv` — pass 1, all 3,709 records. The file to consult for why any
+  individual record was excluded.
+- `LLM_SCREEN_pass2_gpt-6-luna.csv` — pass 2, the 645 borderline records re-read.
+- `LLM_RESCORE_includes_gpt-6-luna.csv` — pass 3, the 945 then-included records rescored onto one
+  scale; 851 included, 94 dropped.
+
+**Inputs to the later passes** (selections, not results)
+
+- `SECOND_PASS_candidates.csv` — the 645 records selected for pass 2.
+- `RESCORE_includes.csv` — the 945 records selected for pass 3.
+
+**Pilots**, retained as the record of the prompt revisions and of the repeat-agreement measurement:
+`llm_pilot2..5b_gpt-6-luna.csv`. Pilot 5b is the repeat of pilot 5 and the two together give the 92%
+agreement figure.
+
+**Tools**: `../tools/screen_llm.py` (screening, stdlib only), `../tools/select_second_pass.py`
+(borderline selection), `../tools/make_included_final.py` (produces `INCLUDED_final.csv`),
+`../tools/fetch_abstracts2.py` (abstract recovery; 863 cached, further retrieval has reached
+diminishing returns at 7 recovered from 177 attempts across four sources). The API key is read from
+`~/.openai_key` and is never logged, written or committed.
