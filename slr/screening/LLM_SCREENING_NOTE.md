@@ -26,7 +26,7 @@ check below a measurement rather than a restatement.
 | 3. rescore of the included set | 945 | `screening_prompt_rescore.md` dba37f55038ccfda | `LLM_RESCORE_includes_gpt-6-luna.csv` |
 
 Model `gpt-6-luna` throughout; zero API or parse failures in all three passes. Pass 1 took 43
-minutes, the whole pipeline including pilots cost approximately US$5.50.
+minutes.
 
 Pass 1 asks whether a record meets the inclusion criteria. Pass 2 asks a different and sharper
 question of the borderline records — whether a full-text reading would fill any field of the §7
