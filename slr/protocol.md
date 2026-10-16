@@ -68,7 +68,14 @@ A candidate will be excluded if any of the following criteria apply:
 * E4 - Insufficient safety/verification relevance: The work is focused solely on general-purpose performance, programming productivity, or language features without relevance to safety, verification, restriction, or toolchain feasibility.
 * E5 - Duplicate or superseded work: The work is a duplicate or superseded version of another included study. Where multiple versions exist, the most complete or recent version will be retained.
 * E6 - Books: including text books or book chapers. Such works are typically do not undergo the same peer-review process as journal articles or conference papers, and their content can vary substantially across editions, making the specific claims difficult to verify or trace to a fixed version.
-* E8 - List of`"exclude-keywords"`defined in the automated extraction tools.
+There is no E7, and the former E8 — "list of exclude-keywords defined in the automated extraction
+tools" — has been removed. It referred to the keyword-whitelist filter described and superseded in
+§6.1, and a keyword blacklist is the failure mode the screening procedure replaces: measured against
+the corpus it was run on, that filter retained 1 of 107 worst-case execution time records and none of
+the 60 concerning memory management. E8 was never recorded against a screening decision, so its
+removal invalidates no logged decision. The screening prompts kept in `slr/tools/` were written while
+E8 still stood and state that it is deliberately not applied; they are retained unaltered as the
+record of what was actually run.
 
 **Interpretation of the criteria**
 
