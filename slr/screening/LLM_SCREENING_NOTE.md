@@ -99,8 +99,24 @@ demoted certification *process* studies, which protocol §5 excludes.
    `select_second_pass.py` as run matched titles alone and selected 645 records. The same rules
    applied to title+abstract select 1,133, so pass 2 covered 57% of eligible borderline records, and
    just 15 of 134 for the managed-runtime timing rule. This, not the rule's wording, is why WCET
-   retention barely moved. The remaining 488 records are a known gap; run
-   `select_second_pass.py --exclude-done SECOND_PASS_candidates.csv` to generate them.
+   retention barely moved.
+
+   Of the 488 eligible records that were not re-read, 115 had been included by pass 1 and so were
+   re-read by pass 3 regardless; 92 of those remain in the included set and 23 were dropped. The
+   gap is therefore the other **373, which pass 1 excluded and nothing re-examined**. Eleven are
+   proceedings front matter and session details, correctly out under E1 and E6; the remaining 362
+   are substantive records, excluded on a single reading and mostly scored 2 (278 of them). Nine
+   sit at 3 and are the most likely to be misjudged — among them an overview of Scade, asynchronous
+   event handling in safety-critical Java, and an evaluation of static-analysis tools.
+
+   This gap is left open deliberately. Closing it would require a second pass over the 373 and then
+   a third-pass rescore of whatever it promoted, which would change the size of the included set
+   and the figures reported in the chapter; it is deferred until the included set is no longer
+   upstream of work in progress. To close it:
+   `select_second_pass.py --exclude-done SECOND_PASS_candidates.csv`, then screen the result with
+   `screening_prompt_pass2.md` and rescore the promoted records with `screening_prompt_rescore.md`.
+   Backward snowballing from the included set, which the protocol requires in any case, recovers
+   work of this kind independently.
 4. **Residual instability at the include/exclude boundary.** "A Modular Worst-case Execution Time
    Analysis Tool for Java Processors" was excluded while two near-identical Java-processor WCET
    papers were included. Records in this band should be treated as provisional.
