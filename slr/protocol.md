@@ -70,6 +70,40 @@ A candidate will be excluded if any of the following criteria apply:
 * E6 - Books: including text books or book chapers. Such works are typically do not undergo the same peer-review process as journal articles or conference papers, and their content can vary substantially across editions, making the specific claims difficult to verify or trace to a fixed version.
 * E8 - List of`"exclude-keywords"`defined in the automated extraction tools.
 
+**Interpretation of the criteria**
+
+The criteria above state what is in scope; the following rules settle the cases where two of them
+appear to conflict. They were added after a validated screening pilot in which each had caused a
+known-relevant paper to be misclassified, and they change how the criteria are read, not which
+criteria apply. Codes I1-I5 and E1-E6 are unchanged, so decisions already logged under them remain
+valid.
+
+* **Timing and execution-model evidence (I3 against E4).** General benchmarking — throughput,
+  speedup, productivity comparisons — is general-purpose performance and E4 applies. Evidence about
+  *timing determinism in a language runtime*, however, is central to RQ3 and is included under I3
+  whether or not the work mentions safety or certification: worst-case execution time,
+  schedulability, deadlines, task periodicity, interrupt response, jitter, garbage-collection pauses
+  and the global interpreter lock, considered as properties of an interpreter, virtual machine, JIT
+  or managed runtime. The boundary is the level of the claim. Timing predictability obtained from
+  hardware or microarchitecture — cache organisation and cache-behaviour prediction, pipelines,
+  branch prediction, memory controllers, processor and multi-core architecture, hardware-assisted
+  collection — does not inform RQ1-RQ3 and remains excluded under E4, despite sharing the WCET and
+  real-time vocabulary. What matters is whether the work tells us what a *language runtime* does
+  rather than what a processor does.
+* **Restriction irrespective of motive (I3 against E4).** A work that defines, implements or
+  analyses a restricted subset of a dynamic language, or renders one statically typed or statically
+  analysable, satisfies I3 even where the restriction was motivated by compilation, performance or
+  interoperability rather than by safety. The motivation for a subset does not change the evidence
+  it provides about what such a subset can be, which is the question RQ1 asks.
+* **Publication type is presumed (I1, E1, E6).** I1 and I2 are treated as satisfied unless
+  something in the record positively indicates otherwise — a venue naming a book, textbook or
+  preprint server, or a title that is plainly marketing, editorial or a blog post. Missing, empty or
+  uninformative metadata is not evidence of non-peer-reviewed material. The venue field is evidence
+  for publication *type* only: it must play no part in judging relevance, so a workshop paper and a
+  journal article are assessed identically. This matters at scale, because 488 records in the
+  screening set carry no abstract while only 11 of those also lack venue information; treating thin
+  metadata as disqualifying would have discarded the rest on a technicality.
+
 ## 6. Screening
 
 ### 6.1 Construction of the screening set
@@ -89,6 +123,24 @@ The screening set, the held and excluded sets, and the method note are under `sl
 ### 6.2 Screening procedure
 
 Titles and abstracts will be screened first to exclude clearly irrelevant papers. The included studies will then be assessed using a two-tier reading strategy.  **Core comparator studies** , including key approaches such as Nagini, ESBMC-Python, Monat, Fromherz, RPython, CrossHair, PyVeritas, and the CompCert qualification work, will be read in full because the detailed extraction fields required for this review cannot reliably be recovered from abstracts or selected sections alone. For all other studies, the methods, results/evaluation, and conclusion sections will be reviewed to make the include/exclude decision. Papers with an unclear or ambiguous fit will be read in full before a final decision is made.
+
+**Relevance scoring and the first screening pass.** Because the screening set is too large to read
+exhaustively, the title/abstract pass records a relevance score from 0 to 5 alongside the
+include/exclude decision, so that the included set can be ordered rather than merely partitioned. A
+5 presents or evaluates a verification, static-analysis, type-system or language-subsetting
+technique for Python or another dynamically typed language, or establishes directly whether a given
+DO-178C objective is attainable for such a language; a 4 applies those techniques to a statically
+typed language used here as precedent (Ada/SPARK, safety-critical Java, MISRA C, Rust), or reports
+industrial experience of formal methods or tool qualification under DO-178C; lower scores record
+progressively weaker connections to the research questions.
+
+The decision and the score must be consistent: a record scored 4 or 5 is an include, and a record
+scored 0 or 1 is not, so that an exclusion can never be recorded against a paper simultaneously
+judged highly relevant. Scores of 2 and 3 straddle the threshold and may fall either way; these are
+retained as a borderline band for a second pass rather than being decided on a single reading,
+because repeat screening of the same records agreed on 92% of decisions overall (Cohen's kappa
+0.81) with essentially all disagreement concentrated at this 2-3 boundary. Agreement was no lower
+for records lacking abstracts (90%) than for those carrying them (92%).
 
 Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) is recorded in the `decision`, `criterion` and `notes` columns of `slr/screening/SCREEN_bands1-2.csv`, which serves as the screening log.  A supervisor or second reviewer will independently check a sample of approximately 20% of screening decisions, with disagreements resolved through discussion.
 
