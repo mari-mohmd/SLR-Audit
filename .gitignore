@@ -1,2 +1,5 @@
 **/.DS_Store
 .DS_Store
+# API keys - never commit
+.openai_key
+*.key
