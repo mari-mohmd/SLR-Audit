@@ -2,8 +2,9 @@
 """Summarise the human verification of the 60-record sample.
 
 Read VERIFY_60.pdf, decide for each record whether you agree with the final decision, and
-mark the ones you do not in VERIFY_60_response.csv: put any of y/yes/x/1 in the `disagree`
-column and give the reason in `why`. Rows left blank count as agreed.
+mark the ones you do not in VERIFY_60_response.csv: put `d` in the `disagree` column and the
+reason in `why`. The other columns are already filled in, and rows left blank count as
+agreed.
 
   python3 summarise_verification.py
 
@@ -21,7 +22,7 @@ import argparse, csv, math, pathlib, re, sys
 
 csv.field_size_limit(10 ** 9)
 SCREENING = pathlib.Path(__file__).resolve().parent.parent / "screening"
-YES = {"y", "yes", "x", "1", "true", "disagree"}
+YES = {"d", "y", "yes", "x", "1", "true", "disagree", "disagreed"}
 
 
 def main():
@@ -32,6 +33,15 @@ def main():
         rows = list(csv.DictReader(fh))
     if not rows:
         sys.exit("no rows in the response file")
+
+    # automated_decision comes pre-filled; fall back to looking it up if a row lacks it.
+    if any(not (r.get("automated_decision") or "").strip() for r in rows):
+        norm = lambda x: re.sub(r"[^a-z0-9]+", "", (x or "").lower())
+        with open(SCREENING / "INCLUDED_final.csv", encoding="utf-8") as fh:
+            included = {norm(r["title"]) for r in csv.DictReader(fh)}
+        for r in rows:
+            if not (r.get("automated_decision") or "").strip():
+                r["automated_decision"] = "include" if norm(r.get("title")) in included else "exclude"
 
     dis = [r for r in rows if (r.get("disagree") or "").strip().lower() in YES]
     unexplained = [r for r in dis if not (r.get("why") or "").strip()]

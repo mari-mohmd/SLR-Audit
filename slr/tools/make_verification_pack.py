@@ -101,9 +101,11 @@ venue, keywords where available, and abstract, followed by what the screening de
 each round and the reason it gave.
 
 For each record, decide whether you agree with the final decision. Where you agree, move on;
-nothing needs recording. Where you \textbf{disagree}, note the record number and why, either
-on the page or in \texttt{VERIFY\_60\_response.csv}. Only the disagreements are of interest,
-and the review reports how many of the 60 were disputed and on what grounds.
+nothing needs recording. Where you \textbf{disagree}, open
+\texttt{VERIFY\_60\_response.csv}, find that record number, and put \texttt{d} in the
+\texttt{disagree} column with your reason in the \texttt{why} column. The other columns are
+already filled in; leave them alone. Only the disagreements are of interest, and the review reports how many of the
+60 were disputed and on what grounds.
 
 The criteria are in \texttt{slr/protocol.md} \S5. Judge each record against those criteria,
 not against what you would personally have retrieved.
@@ -185,6 +187,7 @@ def main():
         w.writerow(["record", "title", "automated_decision", "disagree", "why"])
         for i, b in enumerate(blind, 1):
             k = norm(b["title"])
+            # pre-filled for reference; the reviewer only touches disagree and why
             w.writerow([i, b["title"], "include" if k in final else "exclude", "", ""])
 
     print(f"wrote {texf.name} and VERIFY_60_response.csv ({len(blind)} records)")
