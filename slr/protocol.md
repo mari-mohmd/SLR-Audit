@@ -2,7 +2,7 @@ Systematic Literature Review Protocol
 
 ## Python for DO-178C-Compliant Airborne Software: Restricted Subset and Verification Toolset
 
-**Version:** 1.3 | **Author:** Mohammad Mari | **Supervisors:** Dr. Lian Wen & Qinyi Li |  **Assessor:** Prof. Rene Hexel |  **Affiliation:** Griffith University | **Date:** 2026-09-15
+**Version:** 1.4 | **Author:** Mohammad Mari | **Supervisors:** Dr. Lian Wen & Qinyi Li |  **Assessor:** Prof. Rene Hexel |  **Affiliation:** Griffith University | **Date:** 2026-09-15 (amended 2026-11-22, see §2.1, §3, §4, §6 and §7)
 
 ---
 
@@ -10,17 +10,37 @@ Systematic Literature Review Protocol
 
 This SLR is being conducted to address the review comments raised at the confirmation seminar, specifically: (1) insufficient depth/breadth of literature supporting the thesis's claims, (2) the need to revise and strengthen the research questions in light of that literature, and (3) the need for a traceable record of how and why the confirmation report is being amended in response to these comments.
 
-## 2. Revised / New Research Questions
+## 2. Research Questions
 
-- **RQ1:** Which Python constructs must be excluded to eliminate known failure classes (unhandled exceptions, unbounded recursion, signal races), and can each exclusion be justified the way MISRA C / SPARK justify theirs?
-- **RQ2:** How does the proposed toolset (subset → static/type checks → bounded model checking) compare in soundness/completeness to Nagini, ESBMC-Python, and CrossHair?
-- **RQ3:** Which DO-178C Level C/D objectives (including DO-333/DO-330) can the subset-plus-toolset realistically support, and which are structurally out of reach for an interpreted, garbage-collected language - as the safety-critical Java precedent suggests?
+### 2.0 Thesis research questions (version 1.3)
 
-(RQ4 from the confirmation report is empirical/experimental, not literature-based, so it's out of scope for this SLR.)
+The questions below are the research questions of the PhD thesis, taken from the confirmation report. Up to version 1.3 this protocol used them directly as the review questions, so the search and screening were designed against them. They remain the thesis questions; this amendment does not change them.
+
+- **Thesis RQ1:** Which Python constructs must be excluded to eliminate known failure classes (unhandled exceptions, unbounded recursion, signal races), and can each exclusion be justified the way MISRA C / SPARK justify theirs?
+- **Thesis RQ2:** How does the proposed toolset (subset → static/type checks → bounded model checking) compare in soundness/completeness to Nagini, ESBMC-Python, and CrossHair?
+- **Thesis RQ3:** Which DO-178C Level C/D objectives (including DO-333/DO-330) can the subset-plus-toolset realistically support, and which are structurally out of reach for an interpreted, garbage-collected language - as the safety-critical Java precedent suggests?
+
+(Thesis RQ4 from the confirmation report is empirical/experimental, not literature-based, so it is out of scope for this SLR.)
+
+### 2.1 Amendment, 22 November 2026: review questions for the SLR
+
+The thesis questions concern the thesis's own proposed subset and toolset, and the literature cannot answer them directly. The SLR therefore answers its own review questions. Each supplies the literature evidence that one or more thesis questions need:
+
+| SLR review question | Evidence it supplies for |
+|---|---|
+| **RQ1:** How has research on Python verification developed over time? | Context for all thesis RQs |
+| **RQ2:** What tools exist for verifying Python correctness, and what guarantees do they provide? | Thesis RQ2 (the comparators Nagini, ESBMC-Python, CrossHair and others) |
+| **RQ2a:** Which Python constructs do existing subsets and verifiers exclude or ban, and on what grounds? Can each exclusion be justified the way MISRA C and SPARK justify theirs? | Thesis RQ1 and the coding guidelines |
+| **RQ3:** How have interpreted and managed-runtime languages, such as Java, been adapted for safety-critical use? | Thesis RQ3 (the safety-critical Java precedent) |
+| **RQ4:** What challenges remain before Python can meet safety-critical certification requirements? | Thesis RQ3 (attainable and out-of-reach DO-178C objectives) |
+
+Ada and C are not treated as comparators under RQ3, because they are compiled ahead of time and have no managed runtime. Their literature, together with the safety-standard, coverage, WCET and tool-qualification literature, is reference material for RQ4.
+
+**Effect on screening.** Nothing is re-screened. The screening prompts in `slr/tools/` were written against the thesis research questions in §2.0. They are kept unaltered as the record of what was run. The inclusion and exclusion criteria (§5) did not change, and the review questions cover the topics of the thesis questions, so the screening and its verification stand. A study relevant only to the review questions could have been screened out; this is reported as a limitation.
 
 ## 3. Search Strategy
 
-**Databases:** IEEE Xplore, ACM Digital Library, Scopus, SpringerLink, ScienceDirect. Google Scholar and DBLP for snowballing only.
+**Databases:** IEEE Xplore, ACM Digital Library, Scopus, SpringerLink, ScienceDirect.
 
 **Search terms**, combined per topic:
 
@@ -33,16 +53,26 @@ This SLR is being conducted to address the review comments raised at the confirm
 - Query7 - safety-critical Java OR SCJ OR JSF AV
 - Query8 - Mojo OR Cython OR Nuitka OR PyPy OR Numba OR MicroPython (performance-oriented or restricted Python implementations)
 
-**Date range:** 1995–2026 (earlier foundational sources - e.g. Leveson & Harvey 1983, MISRA/SPARK origins - are pulled in via snowballing, not the date-bound search).
+**Date range:** 1995–2026. This is the scope of the review. Earlier sources are not sought.
 
-**Also:** backward/forward snowballing from Nagini, ESBMC-Python, CrossHair, and the safety-critical Java papers already identified; manual check of key venues (SAFECOMP, ISSTA, ICSE, DASC).
+**Snowballing.** Not performed at this stage (amendment of 22 November 2026). Earlier versions of this protocol planned backward and forward snowballing and a manual check of key venues. Both were removed, and the absence of snowballing is reported as a limitation of the review. The only records added outside the database searches are the known-item references in §4 that no database returned.
 
 Each query family will be translated into the exact syntax required by each database and executed accordingly. Search results will be logged in `slr/searches/`. Each database will have its own folder containing the export of each search query. Any deviations from the search queries or conditions defined above will be documented in `prisma_counts.csv`, in the `note` column. The internal structure and level of detail within each file are left to the author’s discretion.
 
 ## 4. Search Validation
 Before screening begins, the search strategy is validated against a known-item set: the Tier-1 references identified in supervisory guidance of 12 August 2026. A search strategy that fails to retrieve papers known to be in scope and indexed in the searched databases is revised before proceeding.
 
-**Result.** Of the 17 Tier-1 references, 14 were present in the merged search results. All 14 are carried through to the screened set (see Section 6.1). The three absent references — Souyris et al. (2005), Leroy (2009) and Kästner et al. (2026) — were not returned by any database search and enter the review through citation searching, recorded as a separate identification route in the PRISMA flow.
+**Result.** Of the 17 Tier-1 references, 14 were present in the merged search results. All 14 are carried through to the screened set (see Section 6.1). The three absent references — Souyris et al. (2005), Leroy (2009) and Pister, Kästner et al. (2026) — were not returned by any database search. They enter the review as an "identified via other methods" route in the PRISMA flow, each with its reason:
+
+| Reference | Why no database search returned it |
+|---|---|
+| Souyris et al. (2005), *Computing the worst case execution time of an avionics program by abstract interpretation*, 5th International Workshop on WCET Analysis (WCET 2005) | Workshop proceedings that none of the five databases indexes |
+| Leroy (2009), *Formal verification of a realistic compiler*, CACM 52(7) | Indexed by ACM, but its title and abstract use none of the query terms on safety, certification, Python or runtimes, so no query family matches it |
+| Pister, Kästner et al. (2026), *Qualifying CompCert for safety-critical avionics software*, ERTS 2026, doi:10.82331/ERTS.2026.35 | ERTS proceedings are not indexed by the five databases (the paper is open access on HAL, hal-05513825) |
+
+All three full texts were retrieved on 22 November 2026; they are assessed and extracted as core studies (IDs C01–C03 in `slr/extraction.csv`).
+
+RPython (Ancona et al., 2007) is a known item that the database searches did return (record 494 in `INCLUDED_final.csv`). It is therefore not added through this route, because that would count it twice.
 
 **Search coverage limitation.** Exports from IEEE Xplore are capped at 1,000 records per query. Query5 and Query6 initially hit that cap and were re-exported in batches on 14 September 2026, raising Query6 from 1,000 to 8,251 records and Query5 from 1,000 to 1,513. Two batches, `query6-8.csv` and `query6-9.csv`, each return exactly 1,000 records and so appear to remain at the cap; this is recorded as a residual limitation rather than pursued further, since the re-export added 7,765 records to the corpus but only about two further records per key topic. SpringerLink applied a similar export cap and was retrieved in batches. Coverage of this review is accordingly not claimed to be exhaustive. It is claimed to be documented, reproducible, and validated against a known-item set, with 14 of the 14 known-relevant references present in the searched corpus appearing in the screened set.
 
@@ -149,18 +179,20 @@ because repeat screening of the same records agreed on 92% of decisions overall 
 0.81) with essentially all disagreement concentrated at this 2-3 boundary. Agreement was no lower
 for records lacking abstracts (90%) than for those carrying them (92%).
 
-Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) is recorded in the `decision`, `criterion` and `notes` columns of `slr/screening/SCREEN_bands1-2.csv`, which serves as the screening log.  A reviewer verifies a stratified sample of 60 screening decisions — 30 drawn from the included set and 30 from the excluded — presented one record per page with its title, venue, keywords and abstract, followed by the decision, criterion, relevance and recorded reasoning for each round that applied to it. For each record the reviewer states whether they agree with the final decision. Agreements are not recorded individually; the review reports how many of the 60 decisions were disputed and the grounds for each dispute, and each disputed record is then re-examined and its resolution recorded. `slr/tools/make_verification_pack.py` builds the pack and `slr/tools/summarise_verification.py` summarises the responses.
+Given the 1.5-month timeframe, this targeted-reading approach is an explicit limitation of the review. Every screening decision (include/exclude, with reason) is recorded in the `decision`, `criterion` and `notes` columns of `slr/screening/SCREEN_bands1-2.csv`, which serves as the screening log.  A reviewer verifies a stratified sample of 60 screening decisions — 30 drawn from the included set and 30 from the excluded — presented one record per page with its title, venue, keywords and abstract, followed by the decision, criterion, relevance and recorded reasoning for each round that applied to it. For each record the reviewer states whether they agree with the final decision. Agreements are not recorded individually; the review reports how many of the 60 decisions were disputed and the grounds for each dispute. `slr/tools/make_verification_pack.py` builds the pack and `slr/tools/summarise_verification.py` summarises the responses.
 
 Agreement and Cohen's kappa are computed from the responses, a disagreement on an included record being taken as a judgement to exclude it and vice versa, and are reported together with the design that produced them. This is a verification of the screening rather than an independent second screen, and two features of it raise the coefficient above what an independent check would give: the reviewer is shown each decision and its reasoning before judging it, so the two readings are not independent; and the sample is stratified in equal halves, so the screening's marginal is 50% here rather than its true 23% include rate, which alters the chance correction. The kappa is accordingly reported as an upper bound, and the substantive result is the count of disputed decisions and the grounds given for them. What the sample establishes is whether a human reader, given the evidence the screening had, endorses its decisions and where it departs from their judgement. It was chosen over a blind re-screen deliberately: judging 60 records blind from a spreadsheet is not work a person can do attentively, and an inattentive blind screen measures fatigue rather than agreement.
 
 The sample is stratified rather than random so that exclusions are checked as closely as inclusions. Only about 23% of screened records are included, so a random sample of this size would contain few inclusions and would leave the decision most consequential for the review — to discard a record — largely unexamined. An earlier version of this protocol specified an independent check of approximately 20% of decisions, which at 3,709 screened records is 742 and was not achievable within the candidature timeframe. Where verification disputes a decision on grounds that implicate a criterion rather than a single record, the criterion is revised and the affected records re-screened, as was done during the development of the automated pass.
+
+**Outcome of the verification (amendment, 22 November 2026).** The reviewer disputed 4 of the 60 decisions (93% agreement, kappa 0.87 as an upper bound); the responses and reasons are in `slr/screening/VERIFY_60_response.csv`. The sample measures the reliability of the screening and is not a re-screen, so individual decisions in the sample are not changed on the strength of a single disputed record. Three disputes are boundary judgements on single records: two inclusions judged to concern security rather than safety (smart-card security certification; MISRA C compliance of open-source RTOSs framed as secure coding) and one inclusion judged unsound and hard to qualify (LLM-based type inference for Python), which the extraction records through its guarantee level. The fourth, the exclusion of restart-based fault tolerance (record 59), implicates a criterion rather than a record: it raises whether architectural containment of unverified components is in scope. It is handled under the rule above as a scope decision (§7), and the affected records are re-screened once that decision is made.
 
 ## 7. Data Extraction
 
 For each included paper, data will be extracted using a predefined extraction schema and recorded in `slr/extraction.csv`, with one row per included study. The schema will capture the following information:
 
 * Bibliographic information: authors, title, publication year, venue, and DOI or other persistent identifier where available.
-* RQ mapping: the research question(s) (RQ1--RQ3) informed by the study and the evidence relevant to each RQ.
+* RQ mapping: the SLR review question(s) (RQ1--RQ4, including RQ2a; §2.1) informed by the study and the evidence relevant to each RQ.
 * Language and tool: the programming language, tool, framework, analysis technique, or verification technology studied.
 * Verification or restriction approach: the approach used to verify, analyse, restrict, or otherwise establish properties of the language or programs.
 * Subset restrictions: any language subset, coding restrictions, or programming constructs that the approach requires or imposes, together with the stated rationale for each restriction.
@@ -175,8 +207,19 @@ For each included paper, data will be extracted using a predefined extraction sc
 * DO-178C relevance: the stated or assessed relevance of the approach to DO-178C objectives, verification activities, or restrictions associated with airborne safety-critical software.
 * Author-stated limitations: limitations, threats to validity, assumptions, or unresolved issues explicitly identified by the authors.
 
+* Quality assessment (five items, each scored 1, 0.5 or 0): QA1 the technique is evaluated, not only proposed; QA2 the main claim is substantiated (proved or demonstrated); QA3 the evaluation is at realistic scale; QA4 an artefact is available; QA5 the venue is peer reviewed. The total (0–5) qualifies the synthesis and is not used to exclude studies.
+
 Where a field is not reported or cannot be determined from the paper, it will be recorded as NR (not reported) rather than inferred.
+
+**Depth and order of extraction (amendment, 22 November 2026).**
+1. Papers that define or impose a language subset come first. These are core papers, and precedent papers on MISRA, SPARK, Ravenscar, SCJ and similar profiles. Only the subset fields are extracted at this step: restrictions, rationale for each, excluded features with their reason, and the failure class each exclusion targets. These answer RQ2a.
+2. The remaining core papers (relevance 5) are then extracted on all fields above, from the full text.
+3. The precedent papers (relevance 3–4) get a short row: bibliographic fields, RQ mapping, role (Python tool or empirical study, managed runtime, or reference standard), language, tool, approach, guarantee, a one-sentence finding and a verbatim quote.
+
+Records in an area whose scope is under review are not extracted until the scope is decided. The area of verification record 59 (architectural containment, runtime assurance and restart-based designs) is one such area, pending the supervisory decision of 27 November 2026.
+
+**AI assistance.** Extraction is assisted by a large language model, which works under written instructions: every field must come from the paper text, unreported fields are recorded as NR, and each finding is backed by a verbatim quote that is checked automatically against the source. A human reviewer verifies a stratified sample of rows and records the result in `verified_by` and `verification_notes`. People resolve all disagreements.
 
 ## 8. Synthesis
 
-Papers will be grouped by verification approach (type-based, model checking, symbolic execution, language subsetting) and compared across groups against RQ1–RQ3.
+Papers will be grouped by verification approach (type-based, abstract interpretation, deductive, model checking, symbolic execution, testing and runtime checking, language subsetting and translation). For the core papers, a matrix sets each approach against property class, soundness, trusted computing base, developer burden and DO-178C relevance (RQ2). Construct exclusions and their rationale are tabulated against the failure classes they target, alongside MISRA C, SPARK and SCJ (RQ2a). Publication counts are given as a timeline, normalised against the size of the searched corpus in each year (RQ1). The managed-runtime precedent is synthesised by adaptation dimension (RQ3). RQ4 states three to five gaps, each traceable to rows of the extraction table.
